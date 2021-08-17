@@ -200,7 +200,7 @@ public class LinkedListB<T> implements Iterable<T>, LinkedListApis<T> {
         for (T x : this) {
 
             if (counter == recalculatedIndex) {
-
+                reverse = false;
                 return x;
             }
             counter++;
@@ -223,6 +223,7 @@ public class LinkedListB<T> implements Iterable<T>, LinkedListApis<T> {
             System.out.print(" " + x + " ->");
             if (counter == recalculatedIndex) {
                 System.out.print("[" + x + "= result]");
+                reverse = false;
                 return x;
             }
             counter++;

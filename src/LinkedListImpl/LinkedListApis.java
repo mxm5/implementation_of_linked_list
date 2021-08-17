@@ -8,7 +8,7 @@ public interface LinkedListApis<T> {
 
     boolean removeIndex(int index);
 
-    void poll();
+    T poll();
 
     int size();
 
@@ -25,4 +25,15 @@ public interface LinkedListApis<T> {
     void print();
 
     T peek();
+
+
+
+    boolean insertAtHead(T element);
+
+    boolean insertAtTail(T element);
+
+    void moveElementToWardsHead(T element);
+
+    void moveElementToWardsTail(T element);
+
 }

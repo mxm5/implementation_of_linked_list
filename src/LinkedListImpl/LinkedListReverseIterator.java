@@ -25,7 +25,6 @@ public class LinkedListReverseIterator<T>  implements Iterator<T>  {
 
     @Override
     public boolean hasNext() {
-
         return currentNode != null;
     }
 

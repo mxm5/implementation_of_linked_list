@@ -1,6 +1,6 @@
 package LinkedListImpl;
 
-public class Rna {
+public class LinkedListTests {
 
     public static <T> void print(T object) {
         System.out.println(object);

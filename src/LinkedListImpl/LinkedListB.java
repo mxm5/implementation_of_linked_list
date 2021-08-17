@@ -2,6 +2,7 @@ package LinkedListImpl;
 
 import java.util.*;
 
+
 public class LinkedListB<T> implements Iterable<T>, LinkedListApis<T> {
 
     Node<T> headNode = new Node<>(null, null, null);
@@ -61,8 +62,7 @@ public class LinkedListB<T> implements Iterable<T>, LinkedListApis<T> {
         reverse = false;
         for (T item : this) {
             if (item.equals(element)) {
-                Node<T> currentNode = ((LinkedListIterator<T>) this.getIterator()).getCurrentNode();
-                currentNode = currentNode != null ? currentNode.getPrevious() : this.tailNode;
+                Node<T> currentNode = getCurrentNode();
                 removeNode(currentNode);
                 size--;
                 break;
@@ -71,6 +71,20 @@ public class LinkedListB<T> implements Iterable<T>, LinkedListApis<T> {
         return false;
     }
 
+
+    public boolean removeReverseElement(T element) {
+        reverse = true;
+        for (T item : this) {
+            if (item.equals(element)) {
+                Node<T> currentNode = getCurrentNode();
+                removeNode(currentNode);
+                size--;
+                reverse =false;
+                break;
+            }
+        }
+        return false;
+    }
 
     @Override
     public boolean removeIndex(int index) {
@@ -82,8 +96,7 @@ public class LinkedListB<T> implements Iterable<T>, LinkedListApis<T> {
 
         for (T x : this) {
             if (counter == index) {
-                Node<T> currentNode = ((LinkedListIterator<T>) this.getIterator()).getCurrentNode();
-                currentNode = currentNode != null ? currentNode.getPrevious() : this.tailNode;
+                Node<T> currentNode = getCurrentNode();
 
                 removeNode(currentNode);
                 size--;
@@ -97,9 +110,10 @@ public class LinkedListB<T> implements Iterable<T>, LinkedListApis<T> {
     }
 
     @Override
-    public void poll() {
+    public T poll() {
         removeNode(tailNode);
         size--;
+        return tailNode.getNodeData();
     }
 
 
@@ -174,8 +188,7 @@ public class LinkedListB<T> implements Iterable<T>, LinkedListApis<T> {
 
         for (T x : this) {
             if (counter == index) {
-                Node<T> currentNode = ((LinkedListIterator<T>) this.getIterator()).getCurrentNode();
-                currentNode = currentNode != null ? currentNode.getPrevious() : this.tailNode;
+                Node<T> currentNode = getCurrentNode();
 
                 this.insertBehind(node, currentNode);
                 return true;
@@ -185,6 +198,12 @@ public class LinkedListB<T> implements Iterable<T>, LinkedListApis<T> {
 
         }
         return false;
+    }
+
+    private Node<T> getCurrentNode() {
+        Node<T> currentNode = ((LinkedListIterator<T>) this.getIterator()).getCurrentNode();
+        currentNode = currentNode != null ? currentNode.getPrevious() : this.tailNode;
+        return currentNode;
     }
 
     @Override
@@ -197,11 +216,11 @@ public class LinkedListB<T> implements Iterable<T>, LinkedListApis<T> {
         int recalculatedIndex = reverse ? maxIndex - index : index;
 
 
-        for (T x : this) {
+        for (T element : this) {
 
             if (counter == recalculatedIndex) {
                 reverse = false;
-                return x;
+                return element;
             }
             counter++;
 
@@ -219,12 +238,12 @@ public class LinkedListB<T> implements Iterable<T>, LinkedListApis<T> {
         int recalculatedIndex = reverse ? maxIndex - index : index;
         String begin = reverse ? "[ end ]" : "[start]";
         System.out.print(begin);
-        for (T x : this) {
-            System.out.print(" " + x + " ->");
+        for (T elemtnt : this) {
+            System.out.print(" " + elemtnt + " ->");
             if (counter == recalculatedIndex) {
-                System.out.print("[" + x + "= result]");
+                System.out.print("[" + elemtnt + "= result]");
                 reverse = false;
-                return x;
+                return elemtnt;
             }
             counter++;
 
@@ -245,6 +264,41 @@ public class LinkedListB<T> implements Iterable<T>, LinkedListApis<T> {
     }
 
 
+
+    @Override
+    public boolean insertAtHead(T element) {
+
+        return insertAt(0,element);
+    }
+
+    @Override
+    public boolean insertAtTail(T element) {
+        return add(element);
+    }
+
+    @Override
+    public void moveElementToWardsHead(T element) {
+        if(!element.equals(headNode.getNodeData())) {
+            int index = indexOf(element);
+            insertAt(index-1,element);
+            removeIndex(index+1);
+
+
+        }
+
+        }
+
+
+    @Override
+    public void moveElementToWardsTail(T element) {
+        if(!element.equals(tailNode.getNodeData())) {
+            int index = indexOf(element);
+            T next = get(index + 1);
+            moveElementToWardsHead(next);
+        }
+    }
+
+
     boolean insertBehind(Node<T> newNode, Node<T> nodeInPosition) {
 
 
@@ -257,6 +311,10 @@ public class LinkedListB<T> implements Iterable<T>, LinkedListApis<T> {
         size++;
         return true;
     }
+
+
+
+
 
     private boolean removeNode(Node<T> removedNode) {
 
@@ -281,4 +339,7 @@ public class LinkedListB<T> implements Iterable<T>, LinkedListApis<T> {
 
     }
 
+    public  void addAll(T ... elements) {
+        this.addAll(Arrays.stream(elements).toList());
+    }
 }

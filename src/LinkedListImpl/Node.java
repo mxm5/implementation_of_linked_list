@@ -1,5 +1,7 @@
 package LinkedListImpl;
 
+import java.util.Objects;
+
 public class Node<T> {
     private Node<T> previous;
     private Node<T> next;
@@ -36,5 +38,18 @@ public class Node<T> {
 
     public void setNodeData(T nodeData) {
         this.nodeData = nodeData;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Node<?> node = (Node<?>) o;
+        return Objects.equals(previous, node.previous) && Objects.equals(next, node.next) && Objects.equals(nodeData, node.nodeData);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(previous, next, nodeData);
     }
 }

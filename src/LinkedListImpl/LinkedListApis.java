@@ -14,7 +14,7 @@ public interface LinkedListApis<T> {
 
     boolean contains(T element);
 
-    T[] toArray();
+    T[] toarray();
 
     int indexOf(T element);
 

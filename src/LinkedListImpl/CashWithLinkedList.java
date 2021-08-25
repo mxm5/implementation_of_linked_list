@@ -9,6 +9,10 @@ public class CashWithLinkedList<T> extends LinkedListB<T> {
 
     private Set<T> uniqueEntries = new HashSet();
 
+//    private Set<T> uniqeEnteriesRecalculate(){
+//
+//    }
+
     public int getCacheSize() {
         return cacheSize;
     }
@@ -22,8 +26,18 @@ public class CashWithLinkedList<T> extends LinkedListB<T> {
     public boolean add(T element) {
         super.add(element);
         boolean add = uniqueEntries.add(element);
-        if(!add) removeElement(element);
-        if(size()>cacheSize) removeIndex(0);
+        if(!add) {
+            removeElement(element);
+        }
+        if(size()>cacheSize) {
+
+            T leastUsed = this.get(0);
+            uniqueEntries.remove(leastUsed);
+            boolean b = removeIndex(0);
+//            System.out.println("removed first");
+//            System.out.println(uniqueEntries);
+//            this.print();
+        }
          return true;
 
     }
@@ -35,4 +49,6 @@ public class CashWithLinkedList<T> extends LinkedListB<T> {
         if (size() < cacheSize)
             super.addAll(elements);
     }
+
+
 }

@@ -149,20 +149,20 @@ public class LinkedListB<T> implements Iterable<T>, LinkedListApis<T> {
     @Override
     public Iterator<T> iterator() {
         if (reverse)
-            iterator = new LinkedListReverseIterator(tailNode);
+            iterator = new LinkedListReverseIterator<T>(tailNode);
         else
             iterator = new LinkedListIterator<T>(headNode);
         return iterator;
     }
 
 
-    public T[] toArray() {
+    public  T[] toarray() {
         ArrayList<T> array = new ArrayList<>(size);
 
         for (T element : this)
             array.add(element);
 
-        return (T[]) array.toArray();
+        return (T[]) array.toArray( );
     }
 
     @Override
@@ -253,7 +253,7 @@ public class LinkedListB<T> implements Iterable<T>, LinkedListApis<T> {
 
     @Override
     public void print() {
-        System.out.print("\n[");
+        System.out.print("[");
         for (T k : this) System.out.print(k + ",");
         System.out.println("]" + " -> size : " + size);
     }
